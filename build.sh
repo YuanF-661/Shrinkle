@@ -15,14 +15,13 @@ for arch in arm64 x86_64; do
 done
 lipo -create "build/$BIN-arm64" "build/$BIN-x86_64" -output "build/$BIN"
 
-# 2. App icon (generated once)
-if [ ! -f build/AppIcon.icns ]; then
+# 2. App icon, from Resources/AppIcon.png (re-render it with scripts/render_assets.sh)
+if [ ! -f build/AppIcon.icns ] || [ Resources/AppIcon.png -nt build/AppIcon.icns ]; then
   ICONSET=build/AppIcon.iconset
   rm -rf "$ICONSET"; mkdir -p "$ICONSET"
-  swift scripts/make_icon.swift build/icon_1024.png
   for s in 16 32 128 256 512; do
-    sips -z $s $s build/icon_1024.png --out "$ICONSET/icon_${s}x${s}.png" >/dev/null
-    sips -z $((s*2)) $((s*2)) build/icon_1024.png --out "$ICONSET/icon_${s}x${s}@2x.png" >/dev/null
+    sips -z $s $s Resources/AppIcon.png --out "$ICONSET/icon_${s}x${s}.png" >/dev/null
+    sips -z $((s*2)) $((s*2)) Resources/AppIcon.png --out "$ICONSET/icon_${s}x${s}@2x.png" >/dev/null
   done
   iconutil -c icns "$ICONSET" -o build/AppIcon.icns
 fi

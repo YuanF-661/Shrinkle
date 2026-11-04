@@ -74,11 +74,12 @@ struct ContentView: View {
     }
 
     private var bottomBar: some View {
-        HStack(spacing: 18) {
+        HStack(spacing: 14) {
             HStack(spacing: 8) {
-                Text("Shrink to")
-                Slider(value: $model.percent, in: 5...90, step: 1)
-                    .frame(width: 150)
+                Text("Shrink to").fixedSize()
+                // No `step:` here: on macOS that draws a tick mark for every value
+                Slider(value: Binding(get: { model.percent }, set: { model.percent = $0.rounded() }), in: 5...90)
+                    .frame(width: 130)
                 Text("\(Int(model.percent))%")
                     .monospacedDigit()
                     .fontWeight(.semibold)
@@ -86,6 +87,7 @@ struct ContentView: View {
             }
 
             Text("Output: JPG")
+                .fixedSize()
                 .font(.caption)
                 .padding(.horizontal, 7).padding(.vertical, 3)
                 .background(Capsule().fill(Color.secondary.opacity(0.15)))
@@ -95,7 +97,7 @@ struct ContentView: View {
                 Button("Same folder as original") { model.outputDir = nil }
                 Button("Choose Folder…") { model.chooseOutputDir() }
             } label: {
-                Label(model.outputDir?.lastPathComponent ?? "Same folder as original", systemImage: "folder")
+                Label(model.outputDir?.lastPathComponent ?? "Original folder", systemImage: "folder")
             }
             .menuStyle(.borderlessButton)
             .fixedSize()
@@ -119,6 +121,7 @@ struct ContentView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 
