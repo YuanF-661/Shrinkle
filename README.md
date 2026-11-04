@@ -1,64 +1,66 @@
-# Shrinkle 缩一缩
+# Shrinkle
 
-一个简单直接的 macOS 照片压缩小工具：把手机拍的照片拖进去，一键压到原来大小的 **20%**（可调），统一转成 JPG。
+A simple, no-fuss macOS app for shrinking phone photos. Drag your photos in and compress them to **20%** of their original file size in one click (adjustable). Every photo is saved as a JPG.
 
-## 什么时候用得上
+## When you'll need it
 
-手机照片动辄 3–10 MB，还常常是 HEIC 格式，很多地方都不收：
+Phone photos are often 3–10 MB and frequently in HEIC format, which a lot of places won't accept:
 
-- **网站上传提示「图片太大」**：报名表、简历附件、签证 / 证件照、学校或公司系统常限制「不超过 2 MB」「不超过 500 KB」。拖进来压一下，再上传就行。
-- **网站不认 HEIC**：iPhone 默认拍的 HEIC 在不少网页、Windows 电脑和老系统上打不开。Shrinkle 会顺手转成通用的 JPG。
-- **发邮件附件超限**：一封邮件放十几张原图很容易超过 20–25 MB 的限制，压到 20% 后能放下好几倍。
-- **二手平台 / 电商上架**：闲鱼、eBay、Vinted 之类一次要传很多张商品图，先批量压小，上传更快，也省手机流量。
-- **只想要照片的一部分**：证件、收据、截图里只需要中间那块，裁剪一下再压缩，文件更小，内容也更清楚。
-- **释放空间、整理归档**：旅行回来几百张照片占满硬盘，压一份小的用来分享或备份，原图保持不动。
-- **发给不在意画质的人**：给家里人、群聊、文档插图用，20% 的大小在手机和电脑屏幕上基本看不出区别。
+- **"Image too large" on upload**: application forms, résumé attachments, visa and ID photos, and school or company portals often cap uploads at 2 MB or even 500 KB. Drop the photo in, shrink it, upload again.
+- **HEIC not supported**: iPhone's default HEIC photos won't open on many websites, Windows PCs and older systems. Shrinkle converts them to universally supported JPG.
+- **Email attachment limits**: a dozen full-size photos easily blow past the 20–25 MB limit. At 20% size you can send several times as many.
+- **Marketplace listings**: eBay, Vinted and similar sites want lots of product photos. Batch-shrink them first for faster uploads and less mobile data.
+- **Only need part of the photo**: for documents, receipts or screenshots, crop to the bit that matters, then compress. Smaller file, clearer content.
+- **Freeing up space**: back from a trip with hundreds of photos? Make a small copy for sharing or backup and keep the originals untouched.
+- **Casual sharing**: for family, group chats or images in documents, a 20% file looks practically the same on a phone or laptop screen.
 
-> 小提示：如果平台要求「不超过 X MB」，可以按「X ÷ 原图大小」来设置滑块。比如原图 5 MB、要求 1 MB 以内，就调到 20% 左右。
+> Tip: if a site says "max X MB", set the slider to roughly X ÷ the original size. For example, a 5 MB photo with a 1 MB limit needs about 20%.
 
-## 功能
+## Features
 
-- **按目标体积压缩**：默认压到原文件的 20%，滑块可调 5%–90%。先降低 JPG 质量；质量降到会明显变差时，改为等比例缩小尺寸，尽量保住画质。
-- **自动转成 JPG**：HEIC / PNG / TIFF / WebP 等都转成兼容性最好的 JPG，自动按照片方向转正，透明背景铺白。
-- **可选的快速裁剪**：点每行的裁剪图标或双击打开，拖动框移动、拖四角缩放，支持自由、原比例、1:1、4:3、3:4、16:9、9:16。不点就完全不影响压缩。
-- **批量处理**：可以拖入多张照片或整个文件夹，也可以拖到 Dock 图标上，多张照片并行处理。
-- **不动原图**：输出为 `原文件名_compressed.jpg`，保存在原图旁边或你选择的文件夹。
-- **隐私**：保留拍摄时间、相机型号等 EXIF 信息，去掉 GPS 位置。
+- **Compress to a target size**: 20% of the original by default, adjustable from 5% to 90%. Shrinkle lowers the JPG quality first. If quality would drop to a point where it looks noticeably worse, it scales the image down instead, to keep it looking good.
+- **Converts to JPG**: HEIC, PNG, TIFF, WebP and more are converted to JPG. Photos are rotated upright automatically and transparent backgrounds become white.
+- **Optional quick crop**: click the crop icon on a row (or double-click the row). Drag the box to move it, drag the corners to resize. Choose Free, Original, 1:1, 4:3, 3:4, 16:9 or 9:16. Skip it and compression works exactly the same.
+- **Batch processing**: drop in many photos or a whole folder, or drop them onto the Dock icon. Several photos are processed at once.
+- **Originals stay untouched**: output is saved as `originalname_compressed.jpg` next to the original or in a folder you choose.
+- **Privacy**: keeps EXIF details like capture date and camera model, but removes GPS location.
 
-## 安装
+## Install
 
-在[发布页面（Releases）](../../releases)下载 `Shrinkle.zip`，解压后把 `Shrinkle.app` 拖到「应用程序」文件夹。
+Download `Shrinkle.zip` from the [Releases](../../releases) page, unzip it, and drag `Shrinkle.app` into your Applications folder.
 
-> App 没有经过 Apple 公证，第一次打开时请**右键点 App → 打开**，再确认一次即可。
+> Shrinkle isn't notarized by Apple. The first time you open it, **right-click the app → Open**, then confirm.
 
-要求 macOS 13 或更高版本，支持 Apple Silicon 和 Intel。
+Requires macOS 13 or later. Runs natively on Apple Silicon and Intel.
 
-## 从源码构建
+> Note: the app's interface is currently in Chinese.
 
-需要安装 Xcode（或 Command Line Tools）：
+## Build from source
+
+You'll need Xcode or the Command Line Tools:
 
 ```bash
 git clone https://github.com/YuanF-661/Shrinkle.git
 cd Shrinkle
-./build.sh        # 生成 build/Shrinkle.app
+./build.sh        # produces build/Shrinkle.app
 ```
 
-## 项目结构
+## Project structure
 
 ```
 Sources/
-  App.swift          App 入口
-  ContentView.swift  主界面：列表、拖放、底部操作栏
-  CropView.swift     裁剪界面
-  Model.swift        状态管理、批量压缩调度
-  Compressor.swift   读取 / 裁剪 / 按目标体积编码 JPG（ImageIO）
+  App.swift          App entry point
+  ContentView.swift  Main window: list, drag and drop, bottom toolbar
+  CropView.swift     Crop editor
+  Model.swift        App state and batch compression
+  Compressor.swift   Load, crop and encode JPG to a target size (ImageIO)
 Resources/Info.plist
-scripts/make_icon.swift  生成 App 图标
-build.sh                 编译 + 打包 .app
+scripts/make_icon.swift  Generates the app icon
+build.sh                 Compiles and packages the .app
 ```
 
-纯 SwiftUI + ImageIO，没有任何第三方依赖。
+Built with SwiftUI and ImageIO only, with no third-party dependencies.
 
-## 开源许可
+## License
 
-本项目采用 [MIT 许可证](LICENSE)，可以自由使用、修改和分发。
+[MIT](LICENSE)
