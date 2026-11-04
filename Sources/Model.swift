@@ -105,7 +105,7 @@ final class AppModel: ObservableObject {
         panel.allowsMultipleSelection = true
         panel.canChooseDirectories = true
         panel.allowedContentTypes = [.image]
-        panel.message = "选择照片（也可以选择文件夹）"
+        panel.message = "Choose photos (folders work too)"
         if panel.runModal() == .OK { add(panel.urls) }
     }
 
@@ -114,7 +114,7 @@ final class AppModel: ObservableObject {
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.canCreateDirectories = true
-        panel.prompt = "保存到这里"
+        panel.prompt = "Save Here"
         if panel.runModal() == .OK { outputDir = panel.url }
     }
 

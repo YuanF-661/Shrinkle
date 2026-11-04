@@ -23,9 +23,9 @@ enum CompressError: LocalizedError {
     case unreadable, encodeFailed, writeFailed(String)
     var errorDescription: String? {
         switch self {
-        case .unreadable: return "无法读取图片"
-        case .encodeFailed: return "编码失败"
-        case .writeFailed(let m): return "写入失败：\(m)"
+        case .unreadable: return "Can't read image"
+        case .encodeFailed: return "Encoding failed"
+        case .writeFailed(let m): return "Couldn't save: \(m)"
         }
     }
 }

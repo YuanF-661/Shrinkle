@@ -16,14 +16,14 @@ struct ShrinkleApp: App {
     @StateObject private var model = AppModel.shared
 
     var body: some Scene {
-        Window("Shrinkle 缩一缩", id: "main") {
+        Window("Shrinkle", id: "main") {
             ContentView()
                 .environmentObject(model)
         }
         .defaultSize(width: 760, height: 520)
         .commands {
             CommandGroup(replacing: .newItem) {
-                Button("添加照片…") { model.openPanel() }
+                Button("Add Photos…") { model.openPanel() }
                     .keyboardShortcut("o")
             }
         }

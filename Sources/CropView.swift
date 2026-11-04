@@ -2,7 +2,7 @@ import SwiftUI
 import AppKit
 
 enum AspectOption: String, CaseIterable, Identifiable {
-    case free = "自由", original = "原比例", square = "1:1",
+    case free = "Free", original = "Original", square = "1:1",
          r43 = "4:3", r34 = "3:4", r169 = "16:9", r916 = "9:16"
     var id: String { rawValue }
 
@@ -125,7 +125,7 @@ struct CropView: View {
             .background(Color.black.opacity(0.85))
 
             HStack(spacing: 14) {
-                Picker("比例", selection: $aspect) {
+                Picker("Aspect", selection: $aspect) {
                     ForEach(AspectOption.allCases) { Text($0.rawValue).tag($0) }
                 }
                 .pickerStyle(.segmented)
@@ -139,11 +139,11 @@ struct CropView: View {
 
                 Spacer()
 
-                Button("还原") { aspect = .free; rect = Self.full }
-                    .help("取消裁剪，使用整张图")
-                Button("取消", role: .cancel) { dismiss() }
+                Button("Reset") { aspect = .free; rect = Self.full }
+                    .help("Remove the crop and use the whole photo")
+                Button("Cancel", role: .cancel) { dismiss() }
                     .keyboardShortcut(.cancelAction)
-                Button("完成") {
+                Button("Done") {
                     onDone(isFull(rect) ? nil : rect)
                     dismiss()
                 }

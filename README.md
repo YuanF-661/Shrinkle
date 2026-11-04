@@ -33,8 +33,6 @@ Download `Shrinkle.zip` from the [Releases](../../releases) page, unzip it, and 
 
 Requires macOS 13 or later. Runs natively on Apple Silicon and Intel.
 
-> Note: the app's interface is currently in Chinese.
-
 ## Build from source
 
 You'll need Xcode or the Command Line Tools:

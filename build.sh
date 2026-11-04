@@ -1,5 +1,5 @@
 #!/bin/bash
-# 构建并打包成 Mac App：./build.sh  → build/Shrinkle.app
+# Build and package the Mac app: ./build.sh  ->  build/Shrinkle.app
 set -euo pipefail
 cd "$(dirname "$0")"
 
@@ -7,7 +7,7 @@ APP="build/Shrinkle.app"
 BIN="Shrinkle"
 mkdir -p build
 
-# 1. 编译（Apple Silicon + Intel 通用版）
+# 1. Compile a universal binary (Apple Silicon + Intel)
 for arch in arm64 x86_64; do
   swiftc -O -swift-version 5 -parse-as-library \
     -target "$arch-apple-macos13.0" \
@@ -15,7 +15,7 @@ for arch in arm64 x86_64; do
 done
 lipo -create "build/$BIN-arm64" "build/$BIN-x86_64" -output "build/$BIN"
 
-# 2. 图标（只生成一次）
+# 2. App icon (generated once)
 if [ ! -f build/AppIcon.icns ]; then
   ICONSET=build/AppIcon.iconset
   rm -rf "$ICONSET"; mkdir -p "$ICONSET"
@@ -27,14 +27,14 @@ if [ ! -f build/AppIcon.icns ]; then
   iconutil -c icns "$ICONSET" -o build/AppIcon.icns
 fi
 
-# 3. 组装 .app
+# 3. Assemble the .app bundle
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "build/$BIN" "$APP/Contents/MacOS/$BIN"
 cp Resources/Info.plist "$APP/Contents/Info.plist"
 cp build/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 
-# 4. 本地签名（ad-hoc）
+# 4. Ad-hoc code signing
 codesign --force --deep --sign - "$APP"
 
-echo "✅ 完成：$APP"
+echo "Done: $APP"

@@ -49,10 +49,10 @@ struct ContentView: View {
         .toolbar {
             if !model.items.isEmpty {
                 ToolbarItemGroup {
-                    Button { model.openPanel() } label: { Label("添加照片", systemImage: "plus") }
-                        .help("添加照片")
-                    Button { model.clear() } label: { Label("清空列表", systemImage: "trash") }
-                        .help("清空列表（不会删除任何文件）")
+                    Button { model.openPanel() } label: { Label("Add Photos", systemImage: "plus") }
+                        .help("Add Photos")
+                    Button { model.clear() } label: { Label("Clear List", systemImage: "trash") }
+                        .help("Clear the list (no files are deleted)")
                         .disabled(model.isRunning)
                 }
             }
@@ -62,9 +62,9 @@ struct ContentView: View {
     private var summaryBar: some View {
         HStack {
             Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
-            Text("已完成 \(model.doneCount) 张，共节省 \(formatBytes(model.savedBytes))")
+            Text("\(model.doneCount) photo\(model.doneCount == 1 ? "" : "s") done, saved \(formatBytes(model.savedBytes))")
             Spacer()
-            Button("在 Finder 中显示") { model.revealAll() }
+            Button("Show in Finder") { model.revealAll() }
                 .buttonStyle(.link)
         }
         .font(.callout)
@@ -76,7 +76,7 @@ struct ContentView: View {
     private var bottomBar: some View {
         HStack(spacing: 18) {
             HStack(spacing: 8) {
-                Text("压缩到原大小的")
+                Text("Shrink to")
                 Slider(value: $model.percent, in: 5...90, step: 1)
                     .frame(width: 150)
                 Text("\(Int(model.percent))%")
@@ -85,21 +85,21 @@ struct ContentView: View {
                     .frame(width: 40, alignment: .leading)
             }
 
-            Text("输出 JPG")
+            Text("Output: JPG")
                 .font(.caption)
                 .padding(.horizontal, 7).padding(.vertical, 3)
                 .background(Capsule().fill(Color.secondary.opacity(0.15)))
-                .help("JPG 是兼容性最好的图片格式，HEIC / PNG 等都会转成 JPG")
+                .help("JPG is the most widely supported format. HEIC, PNG and others are converted to JPG.")
 
             Menu {
-                Button("原图所在文件夹") { model.outputDir = nil }
-                Button("选择文件夹…") { model.chooseOutputDir() }
+                Button("Same folder as original") { model.outputDir = nil }
+                Button("Choose Folder…") { model.chooseOutputDir() }
             } label: {
-                Label(model.outputDir?.lastPathComponent ?? "原图所在文件夹", systemImage: "folder")
+                Label(model.outputDir?.lastPathComponent ?? "Same folder as original", systemImage: "folder")
             }
             .menuStyle(.borderlessButton)
             .fixedSize()
-            .help("压缩后的文件保存位置（不会覆盖原图）")
+            .help("Where compressed photos are saved (originals are never overwritten)")
 
             Spacer()
 
@@ -108,7 +108,7 @@ struct ContentView: View {
             } label: {
                 HStack(spacing: 6) {
                     if model.isRunning { ProgressView().controlSize(.small) }
-                    Text(model.isRunning ? "压缩中…" : "开始压缩")
+                    Text(model.isRunning ? "Compressing…" : "Compress")
                 }
                 .frame(minWidth: 90)
             }
@@ -132,9 +132,9 @@ struct EmptyDropView: View {
                 Image(systemName: "photo.on.rectangle.angled")
                     .font(.system(size: 52, weight: .light))
                     .foregroundStyle(targeted ? Color.accentColor : .secondary)
-                Text("把照片拖到这里")
+                Text("Drop photos here")
                     .font(.title2.weight(.medium))
-                Text("或点击选择照片 / 文件夹 · 支持 HEIC、JPG、PNG 等")
+                Text("or click to choose photos or a folder · HEIC, JPG, PNG and more")
                     .foregroundStyle(.secondary)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -173,14 +173,14 @@ struct ItemRow: View {
                     .foregroundStyle(item.crop != nil ? Color.accentColor : .secondary)
             }
             .buttonStyle(.borderless)
-            .help(item.crop != nil ? "修改裁剪" : "裁剪（可选）")
+            .help(item.crop != nil ? "Edit crop" : "Crop (optional)")
             .disabled(disabled)
 
             Button(action: onRemove) {
                 Image(systemName: "xmark.circle.fill").foregroundStyle(.tertiary)
             }
             .buttonStyle(.borderless)
-            .help("从列表移除")
+            .help("Remove from List")
             .opacity(hovering ? 1 : 0)
             .disabled(disabled)
         }
@@ -189,10 +189,10 @@ struct ItemRow: View {
         .onHover { hovering = $0 }
         .onTapGesture(count: 2) { if !disabled { onCrop() } }
         .contextMenu {
-            Button("裁剪…", action: onCrop).disabled(disabled)
-            if item.outputURL != nil { Button("在 Finder 中显示", action: onReveal) }
+            Button("Crop…", action: onCrop).disabled(disabled)
+            if item.outputURL != nil { Button("Show in Finder", action: onReveal) }
             Divider()
-            Button("从列表移除", action: onRemove).disabled(disabled)
+            Button("Remove from List", action: onRemove).disabled(disabled)
         }
     }
 
@@ -222,7 +222,7 @@ struct ItemRow: View {
     private var detail: String {
         var s = "\(formatBytes(item.bytes)) · \(Int(item.pixelSize.width))×\(Int(item.pixelSize.height))"
         if let c = item.crop {
-            s += " · 裁剪为 \(Int(c.width * item.pixelSize.width))×\(Int(c.height * item.pixelSize.height))"
+            s += " · cropped to \(Int(c.width * item.pixelSize.width))×\(Int(c.height * item.pixelSize.height))"
         }
         return s
     }
@@ -245,7 +245,7 @@ struct ItemRow: View {
                 }
             }
             .buttonStyle(.borderless)
-            .help("在 Finder 中显示")
+            .help("Show in Finder")
         case .failed(let msg):
             Label(msg, systemImage: "exclamationmark.triangle.fill")
                 .foregroundStyle(.orange)
